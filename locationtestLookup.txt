@@ -1,0 +1,66 @@
+<?php
+
+
+$conn = mysqli_connect("ix-dev.cs.uoregon.edu", "jackson", "password", "TrackProject", "3747")
+or die('Error connecting to MySQL server.');
+
+?>
+
+<html>
+<head>
+  <title>Track Testing Final Project</title>
+  </head>
+  
+  <body bgcolor="white">
+  
+  
+  <hr>
+
+<?php
+  
+$locationName = $_POST['locationName'];
+
+$locationName = mysqli_real_escape_string($conn, $locationName);
+
+$query = "SELECT l.location_name, t.team_name, ts.test_date from teams as t right join test_sessions as ts on t.team_code = ts.team_code left join locations as l on l.location_code = ts.location_code where l.location_name like ";
+$query = $query."'%".$locationName."%' ORDER BY ts.test_date DESC;";
+
+?>
+
+<p>
+The query:
+<p>
+<?php
+print $query;
+?>
+
+<hr>
+<p>
+Result of query:
+<p>
+<?php
+$result = mysqli_query($conn, $query)
+or die(mysqli_error($conn));
+print "<pre>";
+while($row = mysqli_fetch_array($result, MYSQLI_BOTH))
+		  {
+			  		      print "\n";
+					      		          print "Location: $row[0]     Team: $row[1]    Date: $row[2]";
+					      		        }
+print "</pre>";
+
+mysqli_free_result($result);
+
+mysqli_close($conn);
+
+?>
+
+<p>
+<hr>
+
+<p>
+<a href="locationtestLookup.txt" >Contents</a>
+of the PHP program that created this page. 	 
+ 
+</body>
+</html>

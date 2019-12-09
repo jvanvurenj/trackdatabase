@@ -1,0 +1,66 @@
+<?php
+
+
+$conn = mysqli_connect("ix-dev.cs.uoregon.edu", "jackson", "password", "TrackProject", "3747")
+or die('Error connecting to MySQL server.');
+
+?>
+
+<html>
+<head>
+  <title>Track Testing Final Project</title>
+  </head>
+  
+  <body bgcolor="white">
+  
+  
+  <hr>
+
+<?php
+  
+$testDate = $_POST['testDate'];
+
+$testDate = mysqli_real_escape_string($conn, $testDate);
+
+$query = "select ts.test_date, t.team_name, l.location_name, st.fname, st.lname from test_sessions as ts left join teams as t on ts.team_code = t.team_code left join staff as st on ts.staff_in_charge = st.ssn left join locations as l on ts.location_code = l.location_code where test_date = ";
+$query = $query."'".$testDate."' ORDER BY t.team_name;";
+
+?>
+
+<p>
+The query:
+<p>
+<?php
+print $query;
+?>
+
+<hr>
+<p>
+Result of query:
+<p>
+<?php
+$result = mysqli_query($conn, $query)
+or die(mysqli_error($conn));
+print "<pre>";
+while($row = mysqli_fetch_array($result, MYSQLI_BOTH))
+		  {
+			  		      print "\n";
+					      		          print "Date: $row[0]     Team: $row[1]    Location: $row[2]      Supervisor: $row[3] $row[4]";
+					      		        }
+print "</pre>";
+
+mysqli_free_result($result);
+
+mysqli_close($conn);
+
+?>
+
+<p>
+<hr>
+
+<p>
+<a href="testsessionLookup.txt" >Contents</a>
+of the PHP program that created this page. 	 
+ <a href="TrackTestingLookup.html" >Go back to the Home Page</a> 
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?php
+
+
+$conn = mysqli_connect("ix-dev.cs.uoregon.edu", "jackson", "password", "TrackProject", "3747")
+or die('Error connecting to MySQL server.');
+
+?>
+
+<html>
+<head>
+  <title>Track Testing Final Project</title>
+  </head>
+  
+  <body bgcolor="white">
+  
+  
+  <hr>
+
+<?php
+  
+$testType = $_POST['testType'];
+$likeTeam = $_POST['likeTeam'];
+	$testType = mysqli_real_escape_string($conn, $testType);
+$likeTeam = mysqli_real_escape_string($conn, $likeTeam);
+
+$query = "SELECT t.result, t.test_type, a.fname, a.lname, tea.team_name 
+	from tests as t left join test_types as tt on t.test_type = tt.test_type left join athletes as a on t.athlete_ssn = a.ssn left join teams as tea on a.team_code = tea.team_code 
+where t.test_type = ";
+
+
+if ($testType == "100M" || $testType == "400M" || $testType == "60M"){
+$query = $query."'".$testType."' AND tea.team_name like '%".$likeTeam."%' ORDER BY t.result ASC;";
+}
+else{
+	print $testType;
+	$query = $query."'".$testType."' AND tea.team_name like '%".$likeTeam."%' ORDER BY cast(t.result as unsigned) DESC;";
+}
+?>
+
+<p>
+The query:
+<p>
+<?php
+print $query;
+?>
+
+<hr>
+<p>
+Result of the query:
+<p>
+<?php
+$result = mysqli_query($conn, $query)
+	or die(mysqli_error($conn));
+print "<pre>";
+while($row = mysqli_fetch_array($result, MYSQLI_BOTH))
+{
+	print "\n";
+	print "Result:  $row[0]     Test:  $row[1]     Athlete:  $row[2] $row[3]     Team: $row[4] ";
+}
+print "</pre>";
+mysqli_free_result($result);
+mysqli_close($conn);
+?>
+<p>
+<hr>
+
+<p>
+<a href="testresultLookup.txt" > Contents </a>
+of the PHP program that created this page.
+<a href="TrackTestingLookup.html" >Go back to the Home Page</a> 
+</body>
+</html>

@@ -1,0 +1,126 @@
+<title> Jackson Track Testing Final Project</title>
+</head>
+
+<body bgcolor="white">
+
+	<h3>Connecting to Track Project using PHP/MySQL</h3>
+
+
+
+	<hr>
+
+	<p>
+	Enter a team name to find information about it and the number of athletes on the team:
+	<br>	Examples: University of Oregon, Gryffindor
+	<p>
+
+	<form action="teamLookup2.php" method="POST">
+
+		<input type="text" name="teamName"> <br>
+		<input type="submit" value="submit">
+		<input type="reset" value="erase">
+	</form>
+
+	<p>
+	Enter a test type and (optional) a team to find the top testing times from that team:
+	<br>Examples: 60M, CLEAN, SQUAT
+
+	<p>
+
+	<form action="testresultLookup.php" method="POST">
+
+		<input type="text" name="testType"> <br>
+		<input type="text" name="likeTeam"> <br>
+		<input type="submit" value="submit">
+		<input type="reset" value="erase">
+	</form>
+
+
+	<p>
+	Enter a location to find all teams that have tested there:
+	<br>Examples: Hayward Field, Hogwarts School of Witchcraft and Wizardry
+	<p>
+
+	<form action="locationtestLookup.php" method="POST">
+
+		<input type="text" name="locationName"> <br>
+		<input type="submit" value="submit">
+		<input type="reset" value="erase">
+	</form>
+
+
+	<p>
+	Enter a test to insert into the database (Note: NewID must be unique):
+	<br>One example: 124, 10.55, 6, 1234567890, 100M
+	<p>
+
+	<form action="insertTest.php" method="POST">
+
+		NewID:   <input type="text" name="iID"> <br>
+		Result:  <input type="text" name="iResult"><br>
+		Test Session ID:   <input type="text" name="iSessionID"><br>
+		Athlete SSN:   <input type="text" name="iSSN"><br>
+		Test Type:   <input type="text" name="iType"><br>
+		<input type="submit" value="submit">
+		<input type="reset" value="erase">
+	</form>
+
+
+
+	<p>
+	Enter a testing date in YYYY-MM-DD format to see test information from that day:
+	<br>Examples: 2019-11-24, 2019-11-26
+	<p>
+
+	<form action="testsessionLookup.php" method="POST">
+
+		<input type="text" name="testDate"> <br>
+		<input type="submit" value="submit">
+		<input type="reset" value="erase">
+	</form>
+
+	<p>
+	Enter an athlete's last name to find information on testing and their team:
+	<br>Examples: Flower, Potter, Johnson
+	<p>
+
+	<form action="athletetestLookup.php" method="POST">
+
+		<input type="text" name="lName"> <br>
+		<input type="submit" value="submit">
+		<input type="reset" value="erase">
+	</form>
+
+
+	<p>
+	Enter an event type to find the top testing marks athletes in that event:
+	<br>Examples: SPRINT, THROW, DISTANCE
+	<p>
+
+	<form action="besttypeLookup.php" method="POST">
+
+		<input type="text" name="aType"> <br>
+		<input type="submit" value="submit">
+		<input type="reset" value="erase">
+	</form>
+
+
+
+
+	<hr>
+
+
+
+
+	<p>
+	<a href="HomePage.txt" >Contents</a>
+	of this page.
+
+
+
+
+
+
+</body>
+</html>
+

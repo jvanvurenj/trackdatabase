@@ -1,0 +1,68 @@
+<?php
+
+
+$conn = mysqli_connect("ix-dev.cs.uoregon.edu", "jackson", "password", "TrackProject", "3747")
+or die('Error connecting to MySQL server.');
+
+?>
+
+<html>
+<head>
+  <title>Track Testing Final Project</title>
+  </head>
+  
+  <body bgcolor="white">
+  
+  
+  <hr>
+
+<?php
+  
+$lName = $_POST['lName'];
+
+$lName = mysqli_real_escape_string($conn, $lName);
+
+$query = "select fname, lname, team_name, athlete_type, test_type, result from (
+select test_type, max(t.result) as result from tests as t left join athletes as a on t.athlete_ssn = a.ssn where a.lname = ";
+$query = $query."'".$lName."' GROUP BY t.test_type) as newtable left join (select a.fname, a.lname, tea.team_name, a.athlete_type from athletes as a left join teams as tea on a.team_code = tea.team_code where a.lname = ";
+$query = $query."'".$lName."') as table2 on 1=1;";
+
+?>
+
+<p>
+The query:
+<p>
+<?php
+print $query;
+?>
+
+<hr>
+<p>
+Result of query:
+<p>
+<?php
+$result = mysqli_query($conn, $query)
+or die(mysqli_error($conn));
+print "<pre>";
+while($row = mysqli_fetch_array($result, MYSQLI_BOTH))
+		  {
+			  		      print "\n";
+					      		          print "Name: $row[0] $row[1]    Team: $row[2]    Event Type: $row[3]   Test Type: $row[4]    Best Result: $row[5]";
+					      		        }
+print "</pre>";
+
+mysqli_free_result($result);
+
+mysqli_close($conn);
+
+?>
+
+<p>
+<hr>
+
+<p>
+<a href="athletetestLookup.txt" >Contents</a>
+of the PHP program that created this page. 	 
+<a href="TrackTestingLookup.html" >Go back to the Home Page</a>  
+</body>
+</html>
